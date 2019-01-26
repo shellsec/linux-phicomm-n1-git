@@ -1,14 +1,14 @@
-# AArch64 kernel for Phicomm N1, Armbian source
+# AArch64 kernel for Phicomm N1
 # Maintainer: Jerry Xiao <isjerryxiao at outlook dot com>
 # Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
 # Contributor: Peter Cai <peter at typeblog dot net>
 
 buildarch=8
 
-pkgbase=linux-phicomm-n1-armbian-git
+pkgbase=linux-phicomm-n1-lts-git
 _srcname=Amlogic_s905-kernel
 _kernelname=${pkgbase#linux}
-_desc="AArch64 kernel for Phicomm N1, Armbian source"
+_desc="AArch64 kernel for Phicomm N1"
 pkgver=4.19.16
 pkgrel=3
 arch=('aarch64')
