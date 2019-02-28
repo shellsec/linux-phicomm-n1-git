@@ -9,7 +9,7 @@ pkgbase=linux-phicomm-n1-lts-git
 _srcname=Amlogic_s905-kernel
 _kernelname=${pkgbase#linux}
 _desc="AArch64 kernel for Phicomm N1"
-pkgver=4.19.24
+pkgver=4.19.26.g02bf7bdd259a
 pkgrel=1
 arch=('aarch64')
 url="https://github.com/isjerryxiao/Amlogic_s905-kernel"
@@ -25,19 +25,15 @@ md5sums=('SKIP'
          'f6ee374f560e1b9df6a7de2399027d1b'
          'd1c40c7367a7081f3b4c03264780f9d4')
 
+pkgver() {
+  cd "${srcdir}/${_srcname}"
+  printf "%s.g%s" "$(make kernelversion)" "$(git rev-parse --short HEAD)"
+}
+
 prepare() {
   cd "${srcdir}/${_srcname}"
 
-  # reset to a certain version
-  git reset --hard c1846e03ebdc40ebdf2a9a06884a6a5cac56717b
-
-  # Dirty hack to git rid of the + in kernel version
-  rm -rf .git
-
   cat "${srcdir}/config" > ./.config
-
-  # add pkgrel to extraversion
-  sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
@@ -45,6 +41,12 @@ prepare() {
 
 build() {
   cd "${srcdir}/${_srcname}"
+
+  # Dirty hack to git rid of the + in kernel version
+  mv .git .git_1
+
+  # add pkgrel to extraversion
+  sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
 
   # get kernel version
   make prepare
