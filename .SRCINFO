@@ -1,5 +1,5 @@
 pkgbase = linux-phicomm-n1-lts-git
-	pkgver = 4.19.21
+	pkgver = 4.19.24
 	pkgrel = 1
 	url = https://github.com/isjerryxiao/Amlogic_s905-kernel
 	arch = aarch64
